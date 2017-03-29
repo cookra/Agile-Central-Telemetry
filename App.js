@@ -3,10 +3,8 @@ Ext.define('CustomApp', {
     componentCls: 'app',
     launch: function () {
 
-        this.add(Ext.create('Ext.panel.Panel', {
-            html: '<div id="content"></div>',
+        this.add(Ext.create('Ext.container.Container', {
             layout: 'fit',
-            height: 500,
             id: 'mypanel',
             itemId: 'mypanel',
             listeners: {
@@ -20,19 +18,18 @@ Ext.define('CustomApp', {
 
     },
     _build: function () {
-        this.down('#mypanel').add(this._circle());
-    },
-    _circle: function () {
-        var drawComponent = Ext.create('Ext.draw.Component', {
-            viewBox: false,
-            items: [{
-                type: 'circle',
-                fill: '#79BB3F',
-                radius: 100,
-                x: 100,
-                y: 100
-            }]
+        var myTarget = Ext.create('Circle', 'circle', 20, 'blue', 20, 20);
+        console.log(myTarget);
+        var mySurface = Ext.create('Ext.draw.Component', {
+            id: 'asasdadasadasasd',    
+            viewbox: false,
+
+            items: [myTarget],
         });
-        return drawComponent;
+        console.log(mySurface);
+        this.down('#mypanel').add(mySurface);
+
     }
+
+
 });
