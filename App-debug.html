@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Agile Central Viewport Template</title>
+    <title>telemetry</title>
 
 
     <script type="text/javascript" src="https://rally1.rallydev.com/apps/2.1/sdk-debug.js"></script>
@@ -9,17 +9,19 @@
     <script type="text/javascript">
         Rally.loadScripts(
                 [
+                      "vis.js",
                       "App.js",
                 ],
         function() {
             Rally.launchApp('CustomApp', {
-                name:"Agile Central Viewport Template"
+                name:"telemetry"
             });
         }, true);
     </script>
 
 
-    <link rel="stylesheet" type="text/css" href="css/App.css"/>
+    <link rel="stylesheet" type="text/css" href="vis.css"/>
+    <link rel="stylesheet" type="text/css" href="app.css"/>
 </head>
 <body>
 </body>
