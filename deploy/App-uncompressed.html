@@ -7,31 +7,55 @@
 
     <script type="text/javascript">
         Rally.onReady(function () {
-                Ext.define('Circle', {
-    constructor: function (type,radious,colour,x,y) {
+                Ext.define('Node', {
 
-        var circle = Ext.create('Ext.draw.Component', {
-            viewBox: false,
-            items: [{
-                type: type,
-                fill: colour,
-                radius: radious,
-                x: x,
-                y: y
-            }]
-        });
-        return circle;
+    parentName: 'Node',
+    group: 'circles',
+    radius: 20,
+    fill: 'blue',
+    opacity: 0.3,
+
+    constructor: function () {
+        console.log('C Node');
+    },
+    _typeDefiner: function (type) {
+        if (type === 'story') {
+            return '#266E5C';
+        }
+        if (type === 'task') {
+            return '#FF9500';
+        }
+        if (type === 'feature') {
+            return '#7D64B1';
+        }
+    }
+});
+                Ext.define('Circle', {
+    extend: 'Node',
+    config: {
+        name: 'Circle',
+        type: 'circle',
+    },
+    constructor: function (x, y, type) {
+        this.x = x;
+        this.y = y;
+        console.log(this.config,x,y, ' CHILD');
+        console.log(this.parentName, ' CHILD');
+        console.log(this.radius, ' CHILD');
+        console.log(this.name, ' CHILD');
+        console.log(this.parentName, ' CHILD');
+        console.log(this.group, ' CHILD');
+        console.log(this.type, ' CHILD');
+        this.fill = this._typeDefiner(type);
     }
 });
                 Ext.define('CustomApp', {
     extend: 'Rally.app.App',
     componentCls: 'app',
     launch: function () {
-        this.add(Ext.create('Ext.container.Viewport', {
-        layout: 'border',
-        items:[{
-            xtype: 'panel',
-            height: '100%',
+
+        this.add(Ext.create('Ext.container.Container', {
+            layout: 'fit',
             id: 'mypanel',
             itemId: 'mypanel',
             listeners: {
@@ -41,13 +65,29 @@
                 },
                 scope: this
             },
-            }]
         }));
 
     },
     _build: function () {
-        this.down('#mypanel').add(Ext.create('Circle','circle',100,'blue',20,20));
-    },
+        var myTarget = [];
+        var posX = 60;
+        var type = ['story','task','feature'];
+        console.log(myTarget);
+        for (var x = 0; x < 3; x++) {
+            myTarget[x] = Ext.create('Circle', posX, 700 ,type[x]);
+            posX = posX + 30;
+        }
+        console.log(myTarget);
+        var mySurface = Ext.create('Ext.draw.Component', {
+            id: 'asasdadasadasasd',
+            viewbox: false,
+            height: 500,
+            items: [myTarget],
+        });
+        console.log(mySurface);
+        this.down('#mypanel').add(mySurface);
+    }
+
 
 });
 

@@ -7,8 +7,9 @@
 
     <script type="text/javascript">
         Rally.onReady(function () {
-                Ext.define("Circle",{constructor:function(type,radious,colour,x,y){var circle=Ext.create("Ext.draw.Component",{viewBox:!1,items:[{type:type,fill:colour,radius:radious,x:x,y:y}]});return circle}});
-                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){this.add(Ext.create("Ext.container.Viewport",{layout:"border",items:[{xtype:"panel",height:"100%",id:"mypanel",itemId:"mypanel",listeners:{afterrender:function(){console.log("Container Created : Calling _build()"),this._build()},scope:this}}]}))},_build:function(){this.down("#mypanel").add(Ext.create("Circle","circle",100,"blue",20,20))}});
+                Ext.define("Node",{parentName:"Node",group:"circles",radius:20,fill:"blue",opacity:.3,constructor:function(){console.log("C Node")},_typeDefiner:function(type){return"story"===type?"#266E5C":"task"===type?"#FF9500":"feature"===type?"#7D64B1":void 0}});
+                Ext.define("Circle",{extend:"Node",config:{name:"Circle",type:"circle"},constructor:function(x,y,type){this.x=x,this.y=y,console.log(this.config,x,y," CHILD"),console.log(this.parentName," CHILD"),console.log(this.radius," CHILD"),console.log(this.name," CHILD"),console.log(this.parentName," CHILD"),console.log(this.group," CHILD"),console.log(this.type," CHILD"),this.fill=this._typeDefiner(type)}});
+                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){this.add(Ext.create("Ext.container.Container",{layout:"fit",id:"mypanel",itemId:"mypanel",listeners:{afterrender:function(){console.log("Container Created : Calling _build()"),this._build()},scope:this}}))},_build:function(){var myTarget=[],posX=60,type=["story","task","feature"];console.log(myTarget);for(var x=0;x<3;x++)myTarget[x]=Ext.create("Circle",posX,700,type[x]),posX+=30;console.log(myTarget);var mySurface=Ext.create("Ext.draw.Component",{id:"asasdadasadasasd",viewbox:!1,height:500,items:[myTarget]});console.log(mySurface),this.down("#mypanel").add(mySurface)}});
 
             Rally.launchApp('CustomApp', {
                 name:"telemetry",

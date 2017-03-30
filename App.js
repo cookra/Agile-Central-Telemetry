@@ -20,8 +20,10 @@ Ext.define('CustomApp', {
     _build: function () {
         var myTarget = [];
         var posX = 60;
+        var type = ['story','task','feature'];
+        console.log(myTarget);
         for (var x = 0; x < 3; x++) {
-            myTarget[x] = Ext.create('Circle', posX, posX);
+            myTarget[x] = Ext.create('Circle', posX, 700 ,type[x]);
             posX = posX + 30;
         }
         console.log(myTarget);
